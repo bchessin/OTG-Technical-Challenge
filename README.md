@@ -5,12 +5,14 @@ Technical Challenge:
 1. Write a function in JavaScript that takes an integer as a parameter and returns the number of 1s in the binary representation of that number (without converting the number to a binary string). As a bonus you can make it a recursive function. 
 2. You have a SQL database with the following two tables:   
 Customers
-id
+
+id,
 name
 
 Orders
-id
-customer_id
+
+id,
+customer_id,
 item_name
 
 Write SQL queries to return the following information:
