@@ -1,0 +1,64 @@
+/* Create a table called customers */
+CREATE TABLE customers (
+    ID integer NOT NULL UNIQUE,
+    Name CHAR(64) NOT NULL,
+);
+
+/* Create a table called orders */
+CREATE TABLE orders (
+    ID integer NOT NULL UNIQUE,
+    Customer_ID integer NOT NULL,
+    Item_Name CHAR(64) NOT NULL,
+);
+
+/* Add some entries into the customers table */
+INSERT INTO customers VALUES(1, 'Brad');
+INSERT INTO customers VALUES(2, 'Bill');
+INSERT INTO customers VALUES(3, 'Haley');
+INSERT INTO customers VALUES(4, 'Sandra');
+
+/* Show the customers table */
+SELECT * FROM customers;
+
+/* Add some entries into the orders table */
+INSERT INTO orders VALUES(1, 1, 'Bread');
+INSERT INTO orders VALUES(2, 1, 'Bananas');
+INSERT INTO orders VALUES(3, 1, 'Bread');
+
+INSERT INTO orders VALUES(4, 2, 'Grapes');
+INSERT INTO orders VALUES(5, 2, 'Bread');
+INSERT INTO orders VALUES(6, 2, 'Apples');
+
+INSERT INTO orders VALUES(7, 3, 'Grapes');
+INSERT INTO orders VALUES(8, 3, 'test item');
+INSERT INTO orders VALUES(9, 2, 'test item');
+
+/* Show the orders table */
+SELECT * FROM orders;
+
+/* The number of orders made by each customer. (DONE) */
+select  name, count(orders.id)
+from    customers
+INNER JOIN orders ON orders.customer_id = customers.ID
+group by customers.name;
+
+/* The list of all customers who have three or more orders. (Done) */
+select  name, count(orders.id)
+from    customers
+INNER JOIN orders ON orders.customer_id = customers.ID
+group by name
+having  count(orders.id) >= 3
+
+/* The list of all customers who have ordered the item named “test item”. (DONE) */
+SELECT name, count(orders.id)
+FROM customers
+INNER JOIN orders ON orders.customer_id = customers.ID
+WHERE item_name = 'test item'
+GROUP BY name;
+
+/* The list of all customers who have NOT ordered the item named “test item”. (DONE) */
+SELECT name, COUNT(customers.id) as Non_Test_Item_Orders_Count
+FROM customers
+INNER JOIN orders ON orders.customer_id = customers.ID
+WHERE orders.item_name != 'test item'
+GROUP BY customers.NAME
